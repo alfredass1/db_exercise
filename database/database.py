@@ -91,6 +91,40 @@ def exercise2_5():
             WHERE department_id = 90"""
     db_query(query)
 
+
 def exercise2_6():
     query = """SELECT MIN(salary), MAX(salary), SUM(salary), AVG(salary) FROM employees"""
     db_query(query)
+
+
+def create_name_view():
+    query = """CREATE VIEW IF NOT EXISTS name
+                   AS SELECT 
+                   first_name,                 
+                   last_name,
+                   FROM employees"""
+    query_database(query)
+    query_database("SELECT * FROM name")
+
+
+def subquery_exercise1():
+    query = """SELECT first_name, last_name, salary
+            FROM employees
+            WHERE salary > (SELECT salary
+                            FROM employees
+                            WHERE last_name='Bull')"""
+
+query_with_in = """SELECT first name, last_name, employee_id, manager_id
+                FROM employees 
+                WHERE (emloyee_id IN (SELECT manager_id FROM employees))"""
+
+db_query("PRAGMA table__info(departments)")
+subquery_exercise1()
+
+
+def subquery_exercise2():
+    query = """SELECT first_name, last_name
+
+
+
+

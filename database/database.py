@@ -64,6 +64,7 @@ def exercise1_7():
 
 def exercise2_1():
     query = """SELECT DISTINCT job_id FROM employees """
+    query = """SELECT DISTINCT job_id FROM employees """
     db_query(query)
 
 
@@ -97,34 +98,75 @@ def exercise2_6():
     db_query(query)
 
 
-def create_name_view():
-    query = """CREATE VIEW IF NOT EXISTS name
-                   AS SELECT 
-                   first_name,                 
-                   last_name,
-                   FROM employees"""
-    query_database(query)
-    query_database("SELECT * FROM name")
+def create_view():
+    query = """CREATE VIEW IF NOT EXISTS names
+            as
+            SELECT
+                first_name,
+                last_name
+            FROM employees"""
+    db_query(query)
+    db_query(query)("SELECT * FROM names")
 
 
-def subquery_exercise1():
-    query = """SELECT first_name, last_name, salary
-            FROM employees
-            WHERE salary > (SELECT salary
-                            FROM employees
-                            WHERE last_name='Bull')"""
+# create_view()
 
-query_with_in = """SELECT first name, last_name, employee_id, manager_id
-                FROM employees 
-                WHERE (emloyee_id IN (SELECT manager_id FROM employees))"""
-
-db_query("PRAGMA table__info(departments)")
-subquery_exercise1()
+def get_all():
+    query = "SELECT * FROM employees"
+    db_query(query)
 
 
-def subquery_exercise2():
-    query = """SELECT first_name, last_name
+def get_3_1():
+    query = """SELECT first_name, last_name, salary  FROM employees
+    WHERE salary > (SELECT salary FROM employees WHERE last_name="Bull")"""
+    db_query(query)
+
+
+def get_3_2():
+    query = """SELECT first_name, last_name, job_id, manager_id  FROM employees
+    WHERE employee_id IN (SELECT manager_id FROM employees)"""
+    db_query(query)
+
+
+def get_3_3():
+    query = """SELECT first_name, last_name, salary FROM employees
+    WHERE salary > (SELECT AVG(salary) FROM employees)"""
+    db_query(query)
+
+
+def get_3_4():
+    query = """SELECT first_name, last_name, salary 
+    FROM employees
+      WHERE salary = (SELECT min_salary FROM jobs WHERE employees.job_id = jobs.job_id)"""
+
+    db_query(query)
+
+def get_3_5():
+    query = """SELECT first_name, last_name, salary, job_id FROM employees
+        WHERE depatment_id IN (SELECT department_id FROM departments WHERE department_name LIKE "IT")"""
+    db_query(query)
+
+def get_3_6():
+    query = """SELECT salary FROM employees
+        WHERE salary IN (SELECT salary FROM employees ORDER BY salary DESC LIMIT 3)"""
+    db_query(query)
+
+
+def get_3_7():
+    query = """SELECT first_name, last_name, FROM employees
+        WHERE salary IN (SELECT salary FROM employees ORDER BY salary DESC LIMIT 3)"""
+    db_query(query)
 
 
 
+
+
+# get_3_2()
+# get_all()
+# get_3_1()
+# get_3_3()
+# get_3_4()
+get_3_5()
+# get_3_6()
+# get_3_7()
 
